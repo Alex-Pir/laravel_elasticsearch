@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Constants;
+use App\Models\Article;
 use App\Repositories\IRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
@@ -29,15 +30,13 @@ class ArticlesController extends Controller
      */
     public function index(Request $request): Inertia\Response
     {
-        $repository = $this->repository;
-
         $currentPage = $request->input('page');
 
         $articles = Cache::remember(
             md5(serialize(['articles', $currentPage])),
             Constants::CACHE_TIME_SHORT,
-            function() use ($repository) {
-                return $repository->getAll();
+            function() {
+                return $this->repository->getAll();
             }
         );
 
