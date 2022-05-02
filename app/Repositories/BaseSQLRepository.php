@@ -2,6 +2,7 @@
 namespace App\Repositories;
 
 use App\DTO\IDto;
+use Exception;
 use Illuminate\Support\Facades\DB;
 use stdClass;
 
@@ -22,9 +23,17 @@ abstract class BaseSQLRepository implements IRepository {
         return $result ?? [];
     }
 
-    public function getById()
-    {
-        // TODO: Implement getById() method.
+    public function getById(int $id): array {
+        $model = DB::table($this->getTable())
+            ->where('id', $id)
+            ->first();
+
+        if (!$model) {
+            throw new Exception('Can not found data by id');
+        }
+
+        return $this->getDtoModel($model)
+            ->toArray();
     }
 
     protected abstract function getTable(): string;

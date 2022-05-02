@@ -3,8 +3,6 @@ namespace App\Repositories;
 
 use App\DTO\ArticleDto;
 use App\DTO\IDto;
-use App\Models\Article;
-use Illuminate\Database\Eloquent\Model;
 use stdClass;
 
 class ArticleRepository extends BaseSQLRepository {

@@ -3,5 +3,5 @@ namespace App\Repositories;
 
 interface IRepository {
     public function getAll(): array;
-    public function getById();
+    public function getById(int $id): array;
 }
