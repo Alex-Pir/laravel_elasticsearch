@@ -28,6 +28,8 @@ Route::get('/', function () {
 
 Route::get('/', [ArticlesController::class, 'index'])->name('home');
 
+Route::get('/search', [ArticlesController::class, 'search'])->name('search');
+
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');

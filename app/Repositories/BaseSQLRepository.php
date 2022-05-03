@@ -4,6 +4,7 @@ namespace App\Repositories;
 use App\DTO\IDto;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use InvalidArgumentException;
 use stdClass;
@@ -21,6 +22,13 @@ abstract class BaseSQLRepository implements IRepository {
 
     public function __construct(IUnitOfWork $unitOfWork) {
         $this->unitOfWork = $unitOfWork;
+    }
+
+    public function search(string $query = ''): Collection {
+        return DB::table($this->getTable())
+            ->where('body', 'like', "%{$query}%")
+            ->orWhere('title', 'like', '%{$query}%')
+            ->get();
     }
 
     /**

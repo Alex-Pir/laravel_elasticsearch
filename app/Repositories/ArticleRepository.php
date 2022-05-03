@@ -3,7 +3,7 @@ namespace App\Repositories;
 
 use App\DTO\ArticleDto;
 use App\DTO\IDto;
-use Illuminate\Database\Eloquent\Model;
+use App\Models\Article;
 use stdClass;
 
 /**
@@ -11,13 +11,20 @@ use stdClass;
  */
 class ArticleRepository extends BaseSQLRepository {
 
+    private Article $article;
+
+    public function __construct(IUnitOfWork $unitOfWork) {
+        parent::__construct($unitOfWork);
+        $this->article = new Article();
+    }
+
     /**
      * Возвращает название таблицы статей
      *
      * @return string
      */
     protected function getTable(): string {
-        return 'articles';
+        return $this->article->getTable();
     }
 
     /**
